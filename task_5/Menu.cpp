@@ -52,6 +52,7 @@ void Menu::addPerson(InfoAboutUniversity*& arr, int &amount, int index)
 	if (index < 0 && index > amount)
 		return;
 	amount++;
+
 	InfoAboutUniversity person = readPersionFromKeyBoard();
 	InfoAboutUniversity* temp = new InfoAboutUniversity[amount];
 	for (int i = 0, k = 0; i < amount; i++)
@@ -61,10 +62,7 @@ void Menu::addPerson(InfoAboutUniversity*& arr, int &amount, int index)
 			k++;
 		}
 		else {
-			temp[i] = person;
-			temp[i].Student = person.Student;
-			temp[i].Teacher.experience = person.Teacher.experience;
-			temp[i].Teacher.salary = person.Teacher.salary;
+			temp[i] = person;	
 		}
 	}	
 	arr = temp;
@@ -127,6 +125,7 @@ InfoAboutUniversity Menu::readPersionFromKeyBoard()
 	cout << "Choose teacher(1) or student (2)" << std::endl;
 	int choise = 0;
 	std::cin >> choise;
+	person.choise = choise;
 	switch (choise)
 	{
 	case 1:

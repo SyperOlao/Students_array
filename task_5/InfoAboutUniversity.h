@@ -6,12 +6,6 @@ struct InfoAboutUniversity
 public: 
 	int choise;
 	std::string name;
-	InfoAboutUniversity(){
-		choise = 0;
-		name = " ";
-
-	}
-
 	union{
 		struct
 		{
@@ -27,7 +21,10 @@ public:
 		}Student;
 
 	};
-	int size = 0;
+	InfoAboutUniversity() {
+		choise = 0;
+		name = " ";
+	}
 	~InfoAboutUniversity(){}
 };
 
