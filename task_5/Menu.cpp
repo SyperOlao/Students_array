@@ -2,30 +2,31 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "List.h"
 
 using namespace std;
 
-void Menu::showInfo(InfoAboutUniversity arr[], int amount)
+void Menu::showInfo(List list)
 {
-	for (int i = 0; i < amount; i++)
+	for (int i = 0; i < list.size; i++)
 	{
-		cout << "Name: " << arr[i].name << std::endl;
-		if (arr[i].choise == 1) {
-			cout <<"Lesson: " << arr[i].Teacher.experience<< std::endl;
+		cout << "Name: " << list.get(i).name << std::endl;
+		if (list.get(i).choise == 1) {
+			cout <<"Lesson: " << list.get(i).Teacher.experience<< std::endl;
 		}
-		if (arr[i].choise == 2) {
-			cout <<"Course: " <<arr[i].Student.course << std::endl;
-			cout <<"Group: " <<arr[i].Student.group << std::endl;
+		if (list.get(i).choise == 2) {
+			cout <<"Course: " << list.get(i).Student.course << std::endl;
+			cout <<"Group: " << list.get(i).Student.group << std::endl;
 		}
 		cout << std::endl;
 	}
 }
 
-void Menu::showAllInformation(InfoAboutUniversity arr[], int amount)
+void Menu::showAllInformation(List list)
 {
-	for (int i = 0; i < amount; i++)
+	for (int i = 0; i < list.size; i++)
 	{
-		showInfoAboutPerson(arr[i]);
+		showInfoAboutPerson(list.get(i));
 	}
 }
 
@@ -47,68 +48,27 @@ void Menu::showInfoAboutPerson(InfoAboutUniversity persion)
 	cout << std::endl;
 }
 
-void Menu::addPerson(InfoAboutUniversity*& arr, int &amount, int index)
-{	
-	if (index < 0 && index > amount)
-		return;
-	amount++;
 
-	InfoAboutUniversity person = readPersionFromKeyBoard();
-	InfoAboutUniversity* temp = new InfoAboutUniversity[amount];
-	for (int i = 0, k = 0; i < amount; i++)
-	{
-		if (i != index) {
-			temp[i] = arr[k];
-			k++;
-		}
-		else {
-			temp[i] = person;	
-		}
-	}	
-	arr = temp;
-}
-
-void Menu::deletePersion(InfoAboutUniversity* &arr, int &amount, int index)
-{
-	if (index < 0 && index > amount)
-		return;
-	amount--;
-	InfoAboutUniversity* temp = new InfoAboutUniversity[amount];
-	for (int i = 0, k = 0; i < amount+1; i++)
-	{
-		if (i != index) {
-			temp[k] = arr[i];
-			k++;
-		}
-	}
-	arr = temp;
-}
-
-void Menu::changePersion(InfoAboutUniversity*& arr, int amount, int index)
-{
-	if (index < 0 && index > amount)
-		return;
-	arr[index] = readPersionFromKeyBoard();
-}
-
-void Menu::readFromFile(InfoAboutUniversity arr[], int &amount, string file)
+void Menu::readFromFile(List &list, int &amount, string file)
 {
 	std::ifstream reading(file);
+	InfoAboutUniversity temp;
 	if (reading) {
 		for (int i = 0; i < amount; i++) {
-			reading >> arr[i].choise;
+			reading >> temp.choise;
 			reading.ignore();
-			getline(reading, arr[i].name);
-			if (arr[i].choise == 1) {
-				reading >> arr[i].Teacher.salary;
-				reading >> arr[i].Teacher.experience;
+			getline(reading, temp.name);
+			if (temp.choise == 1) {
+				reading >> temp.Teacher.salary;
+				reading >> temp.Teacher.experience;
 			}
-			if (arr[i].choise == 2) {
-				reading >> arr[i].Student.id;
-				reading >> arr[i].Student.hasSalary;
-				reading >> arr[i].Student.course;
-				reading >> arr[i].Student.group;
+			if (temp.choise == 2) {
+				reading >> temp.Student.id;
+				reading >> temp.Student.hasSalary;
+				reading >> temp.Student.course;
+				reading >> temp.Student.group;
 			}
+			list.add(temp);
 		}
 	}
 	else {
@@ -142,10 +102,12 @@ InfoAboutUniversity Menu::readPersionFromKeyBoard()
 		cout << "Enter a group: " << std::endl;
 		cin >> person.Student.group;
 		cout << "Has Salary: has(1) no(0)\n";
-		cin >> person.Student.hasSalary;
-
+		bool b; 
+		cin >> b;
+		person.Student.hasSalary = b; 
+		break;
 	default:
-		cout << "You enter a wrong number!!!\n";
+		//cout << "You enter a wrong number!!!\n";
 		break;
 	}
 	return person;

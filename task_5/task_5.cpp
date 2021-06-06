@@ -8,12 +8,10 @@ using namespace std;
 
 int main()
 {
-    Menu menu;
-    int amount = 2;
-    InfoAboutUniversity* university = new InfoAboutUniversity[amount];
-    menu.readFromFile(university, amount, "stud.txt");
-    cout << "Students: \n";
-    ConsoleInterface::showMenu(menu, university, amount);
-  
+    
+    int amount = 4;
+    List university;
+    Menu::readFromFile(university, amount, "stud.txt");
+    ConsoleInterface::showMenu(university);
 }
 

@@ -4,7 +4,7 @@
 void ConsoleInterface::showTextMenu()
 {
     cout << "Choose: \n 1. Show info\n 2. Show all information\n 3. Show info about person\n"
-        << " 4. Add person\n 5. Delete persion\n 6. Change perion \n 7. Exit\n";
+        << " 4. Add person\n 5. Delete persion\n 6. Exit\n";
 }
 
 int ConsoleInterface::enterIndex()
@@ -15,33 +15,40 @@ int ConsoleInterface::enterIndex()
     return index;
 }
 
-void ConsoleInterface::showMenu(Menu &menu, InfoAboutUniversity*& university, int &amount)
+void ConsoleInterface::showMenu(List &list)
 {
     while (true) {
         showTextMenu();
-        int user;
+        InfoAboutUniversity a; 
+        int user, index;
         cin >> user;
         system("cls");
         switch (user)
         {
         case 1:
-            menu.showInfo(university, amount);
+            Menu::showInfo(list);
             break;
         case 2:
-            menu.showAllInformation(university, amount);
+            Menu::showAllInformation(list);
             break;
         case 3:
-            menu.showInfoAboutPerson(university[enterIndex()]);
+            index = enterIndex(); 
+            if (index > 0 && index < list.size) {
+                Menu::showInfoAboutPerson(list.get(index));
+            }
+            else
+            {
+                cout << "You enter a wrong number!!\n";
+            }
             break;
         case 4:
-            menu.addPerson(university, amount, enterIndex());
+            a = Menu::readPersionFromKeyBoard();
+            list.add(a);
             break;
         case 5:
-            menu.deletePersion(university, amount, enterIndex());
+            list.delete_elem(enterIndex());
             break;
-        case 6:
-            menu.changePersion(university, amount, enterIndex());
-            break;
+  
         default:
             return;
         }

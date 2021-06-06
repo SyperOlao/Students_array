@@ -1,19 +1,17 @@
 #pragma once
 #include "InfoAboutUniversity.h"
 #include <string>
+#include "List.h"
 
 using namespace std;
 
 class Menu
 {
 public:
-	void showInfo(InfoAboutUniversity arr[], int amount);
-	void showAllInformation(InfoAboutUniversity arr[], int amount);
-	void showInfoAboutPerson(InfoAboutUniversity persion);
-	void addPerson(InfoAboutUniversity*& arr, int &amount, int index);
-	void deletePersion(InfoAboutUniversity* &arr, int &amount, int index);
-	void changePersion(InfoAboutUniversity* &arr, int amountOfInformation, int index);
-	void readFromFile(InfoAboutUniversity arr[], int &amount, string file);
-	InfoAboutUniversity readPersionFromKeyBoard();
+	static void showInfo(List list);
+	static void showAllInformation(List list);
+	static void showInfoAboutPerson(InfoAboutUniversity persion);
+	static void readFromFile(List &list, int &amount, string file);
+	static InfoAboutUniversity readPersionFromKeyBoard();
 };
 
